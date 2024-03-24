@@ -16,14 +16,7 @@ import {
   Validator_Response,
   ValidatorStats,
 } from "../constants";
-import {
-  Suspense,
-  createRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Suspense, createRef, useCallback, useEffect, useState } from "react";
 
 import useFetchSuspense from "../hooks/useSuspenseFetch";
 import { getValidatorStats, getValidatorurl } from "../utils/utils";
@@ -125,7 +118,7 @@ function Validators() {
 
   useEffect(() => {
     errorBoundaryRef?.current?.resetErrorState();
-  }, [chain]);
+  }, [chain, errorBoundaryRef]);
   // defined like this to avoid passing arrow functions as prop
   const handleSetValidator = useCallback(
     (chain: Chain) => () => {

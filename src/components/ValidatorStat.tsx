@@ -54,11 +54,10 @@ interface ValidatorStatLoadingProps {
 }
 
 export function ValidatorStatLoading({ hasError }: ValidatorStatLoadingProps) {
-  const loadingState = useMemo(() => {
-    {
-      return hasError ? <Text color="grey">N/A</Text> : <Spinner />;
-    }
-  }, [hasError]);
+  const loadingState = useMemo(
+    () => (hasError ? <Text color="grey">N/A</Text> : <Spinner />),
+    [hasError]
+  );
 
   return (
     <Box

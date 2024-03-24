@@ -1,5 +1,4 @@
 import {
-  Skeleton,
   Spinner,
   Table,
   TableContainer,
