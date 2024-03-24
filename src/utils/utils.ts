@@ -1,0 +1,49 @@
+import { Validator, ValidatorStats } from "../constants";
+
+export function getValidatorurl(chain: string): string {
+  return `https://skip-select.s3.amazonaws.com/${chain}/validators.json`;
+}
+
+export function getValidatorStats(validatorInfo: Validator[]): ValidatorStats {
+  let [TotalMEVRevenue, totalMEVShared, bundles] = [0, 0, 0];
+
+  validatorInfo.forEach((validator) => {
+    bundles += validator.bundles;
+    totalMEVShared += validator.TotalMEVShared;
+    TotalMEVRevenue += validator.TotalMEVRevenue;
+  });
+
+  return {
+    TotalMEVRevenue: TotalMEVRevenue,
+    TotalMEVShared: totalMEVShared,
+    bundles,
+  };
+}
+
+export function formatStats(amount?: number) {
+  const units = ["", "K", "M", "B", "T"];
+
+  // Check if the number is valid
+  if (!amount || isNaN(amount) || !isFinite(amount)) {
+    return "N/A";
+  }
+
+  // Determine the unit to use
+  const unitIndex = Math.floor(Math.log10(amount) / 3);
+  const unit = units[unitIndex];
+
+  // Calculate the value with the appropriate unit
+  const value = amount / Math.pow(10, unitIndex * 3);
+
+  // Format the value with up to 2 decimal places
+  const formattedValue = value.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  return `${formattedValue}${unit}`;
+}
+
+export function noop() {
+  return;
+}

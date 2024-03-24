@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import Header from "./components/Header";
+import SubHeader from "./components/SubHeader";
+import Validators from "./components/Validators";
+import ValidatorErrorState from "./components/ValidatorErrorState";
+import ErrorBoundary from "./components/ErrorBoundary";
+import ValidatorsContentLoading from "./components/ValidatorsContentLoading";
+import { Suspense } from "react";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Box className="flex min-h-screen w-full flex-col">
+        <Header />
+        <SubHeader />
+        <ErrorBoundary fallback={<ValidatorErrorState />}>
+          <Suspense fallback={<ValidatorsContentLoading />}>
+            <Validators />
+          </Suspense>
+        </ErrorBoundary>
+      </Box>
+    </ChakraProvider>
   );
 }
 
