@@ -1,15 +1,6 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Text,
-} from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Flex } from "@chakra-ui/react";
 
-import { Search2Icon } from "@chakra-ui/icons";
 import {
   SUPPORTED_CHAINS,
   Chain,
@@ -50,32 +41,11 @@ function ValidatorsContent({ chain, setChain }: ValidatorProps) {
     >
       <ValidatorHeader chain={chain} setChain={setChain} />
       <Flex>
-        <Flex flexDirection="column" className="w-2/3">
-          <Flex
-            paddingTop={12}
-            paddingStart={3}
-            justifyContent="space-between"
-            marginBottom={4}
-          >
-            <Text fontSize="l" color="white" className="font-bold" width={300}>
-              Top MEV Validators on {chain}
-            </Text>
-            <Box color="grey" justifySelf="center">
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <Search2Icon color="gray" />
-                </InputLeftElement>
-                <Input
-                  colorScheme="grey"
-                  placeholder="Filter"
-                  htmlSize={20}
-                  focusBorderColor="grey"
-                  borderColor="whiteAlpha.100"
-                />
-              </InputGroup>
-            </Box>
-          </Flex>
-          <ValidatorTable validators={validatorsRes?.validator_infos} />
+        <Flex className="w-2/3">
+          <ValidatorTable
+            chain={chain}
+            validators={validatorsRes?.validator_infos}
+          />
         </Flex>
         <Flex className="w-1/6"></Flex>
         <Flex className="w-2/6">
