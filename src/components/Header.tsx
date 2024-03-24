@@ -3,7 +3,12 @@ import { Flex, Button, ButtonGroup } from "@chakra-ui/react";
 
 function Header() {
   return (
-    <Flex as="header" justify="space-between" bg="#121214" p={4}>
+    <Flex
+      as="header"
+      justify="space-between"
+      bg="#121214"
+      className="px-16 py-4"
+    >
       <Flex as="span" grow={2} color="white">
         Skip/Select
       </Flex>

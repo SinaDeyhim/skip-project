@@ -16,11 +16,12 @@ import {
   Validator_Response,
   ValidatorStats,
 } from "../constants";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import useFetchSuspense from "../hooks/useSuspenseFetch";
 import { getValidatorStats, getValidatorurl } from "../utils/utils";
 import ValidatorStat from "./ValidatorStat";
+import ValidatorTable from "./ValidatorTable";
 
 function Validators() {
   const [chain, setChain] = useState(SUPPORTED_CHAINS[0]);
@@ -50,8 +51,7 @@ function Validators() {
     <Flex
       bg="#151616"
       width="100%"
-      className="flex-grow w-full"
-      p={1}
+      className="flex-grow w-full px-16 py-4"
       flexDirection="column"
     >
       <Flex color="white" justifyContent="flex-start">
@@ -69,32 +69,36 @@ function Validators() {
           ))}
         </ButtonGroup>
       </Flex>
-      <Flex justifyContent="space-between">
-        <Flex
-          paddingTop={12}
-          paddingStart={3}
-          flexGrow={3}
-          justifyContent="flex-start"
-        >
-          <Text fontSize="l" color="white" className="font-bold" width={300}>
-            Top MEV Validators on {chain}
-          </Text>
-          <Box color="grey" justifySelf="center">
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <Search2Icon color="gray" />
-              </InputLeftElement>
-              <Input
-                colorScheme="grey"
-                placeholder="Filter"
-                htmlSize={20}
-                focusBorderColor="grey"
-                borderColor="whiteAlpha.100"
-              />
-            </InputGroup>
-          </Box>
+      <Flex>
+        <Flex flexDirection="column" className="w-1/2">
+          <Flex
+            paddingTop={12}
+            paddingStart={3}
+            justifyContent="space-between"
+            marginBottom={4}
+          >
+            <Text fontSize="l" color="white" className="font-bold" width={300}>
+              Top MEV Validators on {chain}
+            </Text>
+            <Box color="grey" justifySelf="center">
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Search2Icon color="gray" />
+                </InputLeftElement>
+                <Input
+                  colorScheme="grey"
+                  placeholder="Filter"
+                  htmlSize={20}
+                  focusBorderColor="grey"
+                  borderColor="whiteAlpha.100"
+                />
+              </InputGroup>
+            </Box>
+          </Flex>
+          <ValidatorTable validators={validatorsRes?.validator_infos} />
         </Flex>
-        <Flex flexGrow={1}>
+        <Flex className="w-1/6"></Flex>
+        <Flex className="w-1/3">
           <ValidatorStat chain={chain} validatorStats={validatorStats} />
         </Flex>
       </Flex>

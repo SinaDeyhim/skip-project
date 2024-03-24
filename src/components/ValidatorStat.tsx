@@ -13,13 +13,13 @@ interface ValidityStatProps {
 function ValidatorStat({ chain, validatorStats }: ValidityStatProps) {
   return (
     <Box
-      alignItems="center"
+      justifyContent="space-between"
       p={8}
-      marginEnd={4}
       border="1px"
       borderColor="whiteAlpha.100"
       borderRadius="md"
       width="100%"
+      className="px-16 py-4"
     >
       <Text fontSize="l" color="white" className="font-bold">
         {chain} Validator Stats

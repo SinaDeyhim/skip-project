@@ -10,7 +10,7 @@ import {
 import { Flex } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
-import { SUPPORTED_CHAINS, Chain } from "../constants";
+import { SUPPORTED_CHAINS } from "../constants";
 
 import { ValidatorStatLoading } from "./ValidatorStat";
 import { noop } from "../utils/utils";
@@ -19,7 +19,7 @@ function ValidatorErrorState() {
   return (
     <Flex
       bg="#151616"
-      className="flex-grow w-full"
+      className="flex-grow w-full px-16 py-4"
       p={1}
       flexDirection="column"
     >
@@ -27,6 +27,7 @@ function ValidatorErrorState() {
         <ButtonGroup>
           {SUPPORTED_CHAINS.map((chain) => (
             <Button
+              key={chain}
               colorScheme="whiteAlpha"
               variant="ghost"
               size="sm"

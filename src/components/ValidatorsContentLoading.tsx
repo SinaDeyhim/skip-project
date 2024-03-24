@@ -10,19 +10,14 @@ import {
 import { Flex } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
-import { SUPPORTED_CHAINS, Chain, ValidatorStats } from "../constants";
+import { SUPPORTED_CHAINS } from "../constants";
 
 import { ValidatorStatLoading } from "./ValidatorStat";
 import { noop } from "../utils/utils";
 
-interface ValidatorsContentLoadingProps {
-  chain: Chain;
-}
-
 function ValidatorsContentLoading() {
-  console.log(">>>>> loading");
   return (
-    <Flex bg="#151616" className="flex-grow w-full" p={1} id="me">
+    <Flex bg="#151616" className="flex-grow w-full px-16 py-4" p={1} id="me">
       <Flex color="white" justifyContent="flex-start">
         <ButtonGroup>
           {SUPPORTED_CHAINS.map((chain) => (

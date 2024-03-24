@@ -13,7 +13,7 @@ import { TbLetterK } from "react-icons/tb";
 
 function SubHeader() {
   return (
-    <Flex justify="space-between" bg="#141415" p={4}>
+    <Flex justify="space-between" bg="#141415" className="px-16 py-4">
       <Flex as="span" grow={10} color="white">
         <Link href="/" paddingEnd={8} color="GrayText">
           Overview
