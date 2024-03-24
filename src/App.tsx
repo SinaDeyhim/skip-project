@@ -10,14 +10,11 @@ import { Suspense } from "react";
 function App() {
   return (
     <ChakraProvider>
-      <Box className="flex min-h-screen w-full flex-col ">
+      <Box className="flex min-h-screen w-full flex-col">
         <Header />
         <SubHeader />
-        <ErrorBoundary fallback={<ValidatorErrorState />}>
-          <Suspense fallback={<ValidatorsContentLoading />}>
-            <Validators />
-          </Suspense>
-        </ErrorBoundary>
+
+        <Validators />
       </Box>
     </ChakraProvider>
   );

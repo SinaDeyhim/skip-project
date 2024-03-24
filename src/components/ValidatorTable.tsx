@@ -1,4 +1,6 @@
 import {
+  Skeleton,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -29,7 +31,7 @@ function ValidatorTable({ validators }: ValidatorTableProps) {
           <Thead>
             <Tr>
               <Th>#</Th>
-              <Th>Validator</Th>
+              <Th minWidth={260}>Validator</Th>
               <Th>MEV Rev - Total</Th>
               <Th>MEV Rev - Kept</Th>
               <Th>Bundles</Th>
@@ -49,6 +51,42 @@ function ValidatorTable({ validators }: ValidatorTableProps) {
               : "No Validators found"}
           </Tbody>
         </Table>
+      </TableContainer>
+    </Flex>
+  );
+}
+
+interface ValidatorTableLoadingProps {
+  hasError?: boolean;
+}
+export function ValidatorTableLoading({
+  hasError,
+}: ValidatorTableLoadingProps) {
+  return (
+    <Flex
+      bg="#1C1D1E"
+      p={1}
+      color="grey"
+      padding={4}
+      borderRadius="md"
+      justifyContent="space-between"
+      minHeight={400}
+    >
+      <TableContainer width="100%">
+        <Table variant="unstyled" size="sm">
+          <Thead>
+            <Tr>
+              <Th>#</Th>
+              <Th minWidth={260}>Validator</Th>
+              <Th>MEV Rev - Total</Th>
+              <Th>MEV Rev - Kept</Th>
+              <Th>Bundles</Th>
+            </Tr>
+          </Thead>
+        </Table>
+        <Flex justifyContent="center" alignItems="center" paddingTop={16}>
+          {hasError ? "Validators could not be loaded" : <Spinner />}
+        </Flex>
       </TableContainer>
     </Flex>
   );

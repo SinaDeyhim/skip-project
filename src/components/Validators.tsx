@@ -16,16 +16,24 @@ import {
   Validator_Response,
   ValidatorStats,
 } from "../constants";
-import { useCallback, useEffect, useState } from "react";
+import {
+  Suspense,
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import useFetchSuspense from "../hooks/useSuspenseFetch";
 import { getValidatorStats, getValidatorurl } from "../utils/utils";
 import ValidatorStat from "./ValidatorStat";
 import ValidatorTable from "./ValidatorTable";
+import ErrorBoundary from "./ErrorBoundary";
+import ValidatorErrorState from "./ValidatorErrorState";
+import ValidatorsContentLoading from "./ValidatorsContentLoading";
 
-function Validators() {
-  const [chain, setChain] = useState(SUPPORTED_CHAINS[0]);
-
+function ValidatorsContent({ chain, setChain }: ValidatorProps) {
   const [validatorStats, setValidatorStats] = useState<
     ValidatorStats | undefined
   >();
@@ -40,13 +48,6 @@ function Validators() {
     }
   }, [validatorsRes]);
 
-  const handleSetValidator = useCallback(
-    (chain: Chain) => () => {
-      setChain(chain);
-    },
-    []
-  );
-
   return (
     <Flex
       bg="#151616"
@@ -54,23 +55,9 @@ function Validators() {
       className="flex-grow w-full px-16 py-4"
       flexDirection="column"
     >
-      <Flex color="white" justifyContent="flex-start">
-        <ButtonGroup>
-          {SUPPORTED_CHAINS.map((chain) => (
-            <Button
-              key={chain}
-              colorScheme="whiteAlpha"
-              variant="ghost"
-              size="sm"
-              onClick={handleSetValidator(chain)}
-            >
-              {chain}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Flex>
+      <ValidatorHeader chain={chain} setChain={setChain} />
       <Flex>
-        <Flex flexDirection="column" className="w-1/2">
+        <Flex flexDirection="column" className="w-2/3">
           <Flex
             paddingTop={12}
             paddingStart={3}
@@ -98,11 +85,65 @@ function Validators() {
           <ValidatorTable validators={validatorsRes?.validator_infos} />
         </Flex>
         <Flex className="w-1/6"></Flex>
-        <Flex className="w-1/3">
+        <Flex className="w-2/6">
           <ValidatorStat chain={chain} validatorStats={validatorStats} />
         </Flex>
       </Flex>
     </Flex>
+  );
+}
+
+export interface ValidatorProps {
+  chain: Chain;
+  setChain: (chain: Chain) => () => void;
+}
+
+export function ValidatorHeader({ chain, setChain }: ValidatorProps) {
+  return (
+    <Flex color="white" justifyContent="flex-start">
+      <ButtonGroup>
+        {SUPPORTED_CHAINS.map((supporedChain) => (
+          <Button
+            key={supporedChain}
+            colorScheme="whiteAlpha"
+            variant="ghost"
+            size="sm"
+            onClick={setChain(supporedChain)}
+            color={supporedChain === chain ? "white" : "grey"}
+          >
+            {supporedChain}
+          </Button>
+        ))}
+      </ButtonGroup>
+    </Flex>
+  );
+}
+
+function Validators() {
+  const [chain, setChain] = useState(SUPPORTED_CHAINS[0]);
+  const errorBoundaryRef = createRef<ErrorBoundary>();
+
+  useEffect(() => {
+    errorBoundaryRef?.current?.resetErrorState();
+  }, [chain]);
+  // defined like this to avoid passing arrow functions as prop
+  const handleSetValidator = useCallback(
+    (chain: Chain) => () => {
+      setChain(chain);
+    },
+    []
+  );
+  return (
+    <ErrorBoundary
+      fallback={
+        <ValidatorErrorState chain={chain} setChain={handleSetValidator} />
+      }
+      ref={errorBoundaryRef}
+    >
+      <Suspense fallback={<ValidatorsContentLoading />}>
+        <ValidatorsContent chain={chain} setChain={handleSetValidator} />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 

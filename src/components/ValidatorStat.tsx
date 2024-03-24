@@ -1,4 +1,4 @@
-import { Icon, Skeleton, Stack, Text } from "@chakra-ui/react";
+import { Icon, Spinner, Stack, Text } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { Chain, ValidatorStats } from "../constants";
 import { HiOutlineCash } from "react-icons/hi";
@@ -56,13 +56,10 @@ interface ValidatorStatLoadingProps {
 export function ValidatorStatLoading({ hasError }: ValidatorStatLoadingProps) {
   const loadingState = useMemo(() => {
     {
-      return hasError ? (
-        <Text color="grey">N/A</Text>
-      ) : (
-        <Skeleton height="24px" width="50%" endColor="grey" />
-      );
+      return hasError ? <Text color="grey">N/A</Text> : <Spinner />;
     }
   }, [hasError]);
+
   return (
     <Box
       alignItems="center"
@@ -76,7 +73,7 @@ export function ValidatorStatLoading({ hasError }: ValidatorStatLoadingProps) {
       {hasError ? (
         <Text color="white">Validator not available</Text>
       ) : (
-        <Skeleton height="24px" width="50%" endColor="grey" />
+        loadingState
       )}
       <Stack paddingTop={8}>
         <Icon color="grey" as={HiOutlineCash} />
