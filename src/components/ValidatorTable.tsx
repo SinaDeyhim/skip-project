@@ -48,7 +48,7 @@ function ValidatorTable({ chain, validators }: ValidatorTableProps) {
 
   useEffect(() => {
     setFilteredValidators(validators);
-  }, [chain]);
+  }, [chain, validators]);
 
   useEffect(() => {
     setSearchTerm("");
@@ -63,7 +63,7 @@ function ValidatorTable({ chain, validators }: ValidatorTableProps) {
       );
       setFilteredValidators(filtered || []);
     },
-    [validators, chain]
+    [validators]
   );
 
   const sortedValidators = sortValidators(filteredValidators, columnSort);
@@ -87,7 +87,7 @@ function ValidatorTable({ chain, validators }: ValidatorTableProps) {
         }
       });
     },
-    [columnSort, chain]
+    []
   );
 
   return (
