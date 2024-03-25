@@ -118,7 +118,14 @@ function Validators() {
       }
       ref={errorBoundaryRef}
     >
-      <Suspense fallback={<ValidatorsContentLoading />}>
+      <Suspense
+        fallback={
+          <ValidatorsContentLoading
+            chain={chain}
+            setChain={handleSetValidator}
+          />
+        }
+      >
         <ValidatorsContent chain={chain} setChain={handleSetValidator} />
       </Suspense>
     </ErrorBoundary>

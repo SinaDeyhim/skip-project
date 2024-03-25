@@ -10,13 +10,12 @@ import {
 import { Flex } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
-import { SUPPORTED_CHAINS } from "../constants";
 
 import { ValidatorStatLoading } from "./ValidatorStat";
-import { noop } from "../utils/utils";
 import { ValidatorTableLoading } from "./ValidatorTable";
+import { ValidatorHeader, ValidatorProps } from "./Validators";
 
-function ValidatorsContentLoading() {
+function ValidatorsContentLoading({ chain, setChain }: ValidatorProps) {
   return (
     <Flex
       bg="#151616"
@@ -24,52 +23,9 @@ function ValidatorsContentLoading() {
       width="100%"
       flexDirection="column"
     >
-      <Flex color="white" justifyContent="flex-start">
-        <ButtonGroup>
-          {SUPPORTED_CHAINS.map((chain) => (
-            <Button
-              key={chain}
-              colorScheme="whiteAlpha"
-              variant="ghost"
-              size="sm"
-              onClick={noop}
-            >
-              {chain}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Flex>
+      <ValidatorHeader chain={chain} setChain={setChain} />
       <Flex>
-        <Flex flexDirection="column" className="w-2/3">
-          <Flex
-            paddingTop={12}
-            paddingStart={3}
-            justifyContent="space-between"
-            marginBottom={4}
-          >
-            <Text
-              fontSize="l"
-              color="white"
-              className="font-bold"
-              minWidth={300}
-            >
-              Top MEV Validators on ...
-            </Text>
-            <Box color="grey" justifySelf="center">
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <Search2Icon color="gray" />
-                </InputLeftElement>
-                <Input
-                  colorScheme="grey"
-                  placeholder="Filter"
-                  htmlSize={20}
-                  focusBorderColor="grey"
-                  borderColor="whiteAlpha.100"
-                />
-              </InputGroup>
-            </Box>
-          </Flex>
+        <Flex className="w-2/3">
           <ValidatorTableLoading />
         </Flex>
         <Flex className="w-1/6"></Flex>

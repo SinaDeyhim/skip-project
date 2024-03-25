@@ -124,7 +124,6 @@ function ValidatorTable({ chain, validators }: ValidatorTableProps) {
       </Flex>
       <Flex
         bg="#1C1D1E"
-        p={1}
         color="grey"
         padding={4}
         borderRadius="md"
@@ -242,47 +241,74 @@ export function ValidatorTableLoading({
   hasError,
 }: ValidatorTableLoadingProps) {
   return (
-    <Flex
-      bg="#1C1D1E"
-      p={1}
-      color="grey"
-      padding={4}
-      borderRadius="md"
-      justifyContent="space-between"
-      minHeight={400}
-    >
-      <TableContainer width="100%">
-        <Table variant="unstyled" size="sm">
-          <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th minWidth={260}>Validator</Th>
-              <Th>MEV Rev - Total</Th>
-              <Th>MEV Rev - Kept</Th>
-              <Th>Bundles</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td colSpan={5}>
-                <Flex
-                  justifyContent="center"
-                  alignItems="center"
-                  paddingTop={16}
-                >
-                  {hasError ? (
-                    <Text color="grey" className="font-bold">
-                      Validators could not be loaded. Please try another chain.
-                    </Text>
-                  ) : (
-                    <Spinner />
-                  )}
-                </Flex>
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
-      </TableContainer>
+    <Flex flexDirection="column">
+      <Flex
+        paddingTop={12}
+        paddingStart={3}
+        justifyContent="space-between"
+        marginBottom={4}
+      >
+        <Text fontSize="l" color="white" className="font-bold" width={300}>
+          Top MEV Validators on ...
+        </Text>
+        <Box color="grey" justifySelf="center">
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <Search2Icon color="gray" />
+            </InputLeftElement>
+            <Input
+              colorScheme="grey"
+              placeholder="Filter"
+              htmlSize={20}
+              focusBorderColor="grey"
+              borderColor="whiteAlpha.100"
+            />
+          </InputGroup>
+        </Box>
+      </Flex>
+      <Flex
+        bg="#1C1D1E"
+        color="grey"
+        padding={4}
+        borderRadius="md"
+        justifyContent="space-between"
+      >
+        <TableContainer width="100%" minHeight={300}>
+          <Table variant="unstyled" size="sm">
+            <Thead>
+              <Tr>
+                <Th>#</Th>
+                <Th minWidth={320}>Validator</Th>
+                <Th>MEV Rev - Total</Th>
+                <Th>MEV Rev - Kept</Th>
+                <Th>Bundles</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td colSpan={5}>
+                  <Flex
+                    justifyContent="center"
+                    alignItems="center"
+                    paddingTop={16}
+                    paddingLeft={2}
+                    paddingRight={2}
+                  >
+                    {hasError ? (
+                      <Text color="grey" className="font-bold">
+                        Validators could not be loaded. Please try another
+                        chain.
+                      </Text>
+                    ) : (
+                      <Spinner />
+                    )}
+                  </Flex>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Flex>
     </Flex>
   );
 }
