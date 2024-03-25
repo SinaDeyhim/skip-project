@@ -64,9 +64,14 @@ export function sortValidators(
       typeof b[key] === "string" ? String(b[key]).toLowerCase() : b[key];
 
     if (typeof valueA === "string" && typeof valueB === "string") {
+      // Ignore emojis in comparison
+      const regexEmoji = /(?:\p{Emoji}|(?<=[^\p{Z}\p{S}])\p{Emoji})+/gu;
+      const sanitizedValueA = valueA.replace(regexEmoji, "");
+      const sanitizedValueB = valueB.replace(regexEmoji, "");
+
       return columnSort.direction === SortDirection.ASC
-        ? valueA.localeCompare(valueB)
-        : valueB.localeCompare(valueA);
+        ? sanitizedValueA.localeCompare(sanitizedValueB)
+        : sanitizedValueB.localeCompare(sanitizedValueA);
     } else {
       const numValueA = Number(valueA);
       const numValueB = Number(valueB);

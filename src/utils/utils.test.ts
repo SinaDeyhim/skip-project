@@ -64,7 +64,12 @@ describe("stats formatter", () => {
 
 describe("sortValidators function", () => {
   const validators = [
-    { Name: "Stakers", TotalMEVRevenue: 100, TotalMEVShared: 50, bundles: 10 },
+    {
+      Name: "Stakers🤐",
+      TotalMEVRevenue: 100,
+      TotalMEVShared: 50,
+      bundles: 10,
+    },
     { Name: "IcyCRO", TotalMEVRevenue: 200, TotalMEVShared: 70, bundles: 20 },
     {
       Name: "Active Nodes",
@@ -94,7 +99,7 @@ describe("sortValidators function", () => {
       },
       { Name: "IcyCRO", TotalMEVRevenue: 200, TotalMEVShared: 70, bundles: 20 },
       {
-        Name: "Stakers",
+        Name: "Stakers🤐",
         TotalMEVRevenue: 100,
         TotalMEVShared: 50,
         bundles: 10,
@@ -113,7 +118,7 @@ describe("sortValidators function", () => {
         bundles: 15,
       },
       {
-        Name: "Stakers",
+        Name: "Stakers🤐",
         TotalMEVRevenue: 100,
         TotalMEVShared: 50,
         bundles: 10,
