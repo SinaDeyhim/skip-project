@@ -1,7 +1,9 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import { Flex, Button, ButtonGroup } from "@chakra-ui/react";
+import useIsMobile from "../hooks/isMobile";
 
 function Header() {
+  const isMobile = useIsMobile();
   return (
     <Flex
       as="header"
@@ -14,20 +16,22 @@ function Header() {
       </Flex>
       <Flex as="span" grow={1}>
         <Flex as="span" grow={1} justifyContent="space-between">
-          <ButtonGroup gap="1">
-            <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
-              Home
-            </Button>
-            <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
-              Github
-            </Button>
-            <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
-              Careers
-            </Button>
-            <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
-              Contact
-            </Button>
-          </ButtonGroup>
+          {!isMobile && (
+            <ButtonGroup gap="1">
+              <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
+                Home
+              </Button>
+              <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
+                Github
+              </Button>
+              <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
+                Careers
+              </Button>
+              <Button colorScheme="whiteAlpha" variant="ghost" size="sm">
+                Contact
+              </Button>
+            </ButtonGroup>
+          )}
           <ButtonGroup gap="1">
             <Button
               colorScheme="gray"

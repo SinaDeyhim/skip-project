@@ -16,8 +16,11 @@ import ValidatorTable from "./ValidatorTable";
 import ErrorBoundary from "./ErrorBoundary";
 import ValidatorErrorState from "./ValidatorErrorState";
 import ValidatorsContentLoading from "./ValidatorsContentLoading";
+import useIsMobile from "../hooks/isMobile";
 
 function ValidatorsContent({ chain, setChain }: ValidatorProps) {
+  const isMobile = useIsMobile();
+
   const [validatorStats, setValidatorStats] = useState<
     ValidatorStats | undefined
   >();
@@ -40,18 +43,30 @@ function ValidatorsContent({ chain, setChain }: ValidatorProps) {
       flexDirection="column"
     >
       <ValidatorHeader chain={chain} setChain={setChain} />
-      <Flex>
-        <Flex className="w-2/3">
+      {isMobile && (
+        <Flex flexDirection="column">
           <ValidatorTable
             chain={chain}
             validators={validatorsRes?.validator_infos}
           />
-        </Flex>
-        <Flex className="w-1/6"></Flex>
-        <Flex className="w-2/6">
+
           <ValidatorStat chain={chain} validatorStats={validatorStats} />
         </Flex>
-      </Flex>
+      )}
+      {!isMobile && (
+        <Flex>
+          <Flex className="w-2/3">
+            <ValidatorTable
+              chain={chain}
+              validators={validatorsRes?.validator_infos}
+            />
+          </Flex>
+          <Flex className="w-1/6"></Flex>
+          <Flex className="w-2/6">
+            <ValidatorStat chain={chain} validatorStats={validatorStats} />
+          </Flex>
+        </Flex>
+      )}
     </Flex>
   );
 }
