@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Text,
-} from "@chakra-ui/react";
 import { Flex } from "@chakra-ui/react";
-
-import { Search2Icon } from "@chakra-ui/icons";
 
 import { ValidatorStatLoading } from "./ValidatorStat";
 import { ValidatorTableLoading } from "./ValidatorTable";
