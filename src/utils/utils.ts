@@ -1,3 +1,4 @@
+import { ColumnSortState, SortDirection } from "../components/ValidatorTable";
 import { Validator, ValidatorStats } from "../constants";
 
 export function getValidatorurl(chain: string): string {
@@ -46,4 +47,36 @@ export function formatStats(amount?: number) {
 
 export function noop() {
   return;
+}
+
+export function sortValidators(
+  filteredValidators: Validator[] | undefined,
+  columnSort: ColumnSortState
+): Validator[] | undefined {
+  if (!filteredValidators || filteredValidators.length === 0) return undefined;
+
+  return filteredValidators.slice().sort((a, b) => {
+    const key = columnSort.column;
+
+    const valueA =
+      typeof a[key] === "string" ? String(a[key]).toLowerCase() : a[key];
+    const valueB =
+      typeof b[key] === "string" ? String(b[key]).toLowerCase() : b[key];
+
+    if (typeof valueA === "string" && typeof valueB === "string") {
+      return columnSort.direction === SortDirection.ASC
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
+    } else {
+      const numValueA = Number(valueA);
+      const numValueB = Number(valueB);
+      if (!isNaN(numValueA) && !isNaN(numValueB)) {
+        return columnSort.direction === SortDirection.ASC
+          ? numValueA - numValueB
+          : numValueB - numValueA;
+      } else {
+        return 0;
+      }
+    }
+  });
 }

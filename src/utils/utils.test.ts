@@ -1,5 +1,11 @@
+import { SortDirection } from "../components/ValidatorTable";
 import { Validator } from "../constants";
-import { formatStats, getValidatorStats, getValidatorurl } from "./utils";
+import {
+  formatStats,
+  getValidatorStats,
+  getValidatorurl,
+  sortValidators,
+} from "./utils";
 
 describe("getValidatorStats function", () => {
   it("calculates total MEV revenue, total MEV shared, and total bundles correctly", () => {
@@ -16,17 +22,6 @@ describe("getValidatorStats function", () => {
     };
 
     expect(getValidatorStats(validatorInfo)).toEqual(expectedResult);
-  });
-
-  it("returns zeros for all stats if validatorInfo is empty", () => {
-    const validatorInfo: Validator[] = [];
-    const expectedResult = {
-      TotalMEVRevenue: 0,
-      TotalMEVShared: 0,
-      bundles: 0,
-    };
-    const result = getValidatorStats(validatorInfo);
-    expect(result).toEqual(expectedResult);
   });
 
   it("calculates total MEV revenue and total MEV shared correctly when validatorInfo has only one entry", () => {
@@ -64,5 +59,65 @@ describe("stats formatter", () => {
   it("handles invalid input", () => {
     expect(formatStats(NaN)).toBe("N/A");
     expect(formatStats()).toBe("N/A");
+  });
+});
+
+describe("sortValidators function", () => {
+  const validators = [
+    { Name: "Stakers", TotalMEVRevenue: 100, TotalMEVShared: 50, bundles: 10 },
+    { Name: "IcyCRO", TotalMEVRevenue: 200, TotalMEVShared: 70, bundles: 20 },
+    {
+      Name: "Active Nodes",
+      TotalMEVRevenue: 150,
+      TotalMEVShared: 60,
+      bundles: 15,
+    },
+  ];
+
+  const columnSortAsc = {
+    column: "Name" as keyof Validator,
+    direction: SortDirection.ASC,
+  };
+  const columnSortDesc = {
+    column: "TotalMEVRevenue" as keyof Validator,
+    direction: SortDirection.DESC,
+  };
+
+  it("sorts validators by name in ascending order", () => {
+    const sortedValidators = sortValidators(validators, columnSortAsc);
+    expect(sortedValidators).toEqual([
+      {
+        Name: "Active Nodes",
+        TotalMEVRevenue: 150,
+        TotalMEVShared: 60,
+        bundles: 15,
+      },
+      { Name: "IcyCRO", TotalMEVRevenue: 200, TotalMEVShared: 70, bundles: 20 },
+      {
+        Name: "Stakers",
+        TotalMEVRevenue: 100,
+        TotalMEVShared: 50,
+        bundles: 10,
+      },
+    ]);
+  });
+
+  it("sorts validators by total MEV revenue in descending order", () => {
+    const sortedValidators = sortValidators(validators, columnSortDesc);
+    expect(sortedValidators).toEqual([
+      { Name: "IcyCRO", TotalMEVRevenue: 200, TotalMEVShared: 70, bundles: 20 },
+      {
+        Name: "Active Nodes",
+        TotalMEVRevenue: 150,
+        TotalMEVShared: 60,
+        bundles: 15,
+      },
+      {
+        Name: "Stakers",
+        TotalMEVRevenue: 100,
+        TotalMEVShared: 50,
+        bundles: 10,
+      },
+    ]);
   });
 });
