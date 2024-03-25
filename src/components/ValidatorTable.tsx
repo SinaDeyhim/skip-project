@@ -249,7 +249,9 @@ export function ValidatorTableLoading({
         marginBottom={4}
       >
         <Text fontSize="l" color="white" className="font-bold" width={300}>
-          Top MEV Validators on ...
+          {hasError
+            ? "Validators could not be loaded"
+            : "Top MEV Validators on ..."}
         </Text>
         <Box color="grey" justifySelf="center">
           <InputGroup>
