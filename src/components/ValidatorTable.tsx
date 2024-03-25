@@ -52,6 +52,10 @@ function ValidatorTable({ chain, validators }: ValidatorTableProps) {
 
   useEffect(() => {
     setSearchTerm("");
+    setColumnSort({
+      column: "Name",
+      direction: SortDirection.ASC,
+    });
   }, [chain, setSearchTerm]);
 
   const handleSearch = useCallback(

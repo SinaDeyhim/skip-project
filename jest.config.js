@@ -1,6 +1,6 @@
 module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    roots: ['<rootDir>/src'],
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  };
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  transform: { '^.+\\.ts?$': 'ts-jest' },
+  clearMocks: true,
+};
